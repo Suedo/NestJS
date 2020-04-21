@@ -7,6 +7,6 @@ export class TasksController {
 
   @Get()
   getAllTasks() {
-    return this.taskService.tasks;
+    return this.taskService.getAllTasks();
   }
 }

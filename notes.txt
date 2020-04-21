@@ -1,0 +1,14 @@
+@Module decorator properties
+--------------------------------------------------------------------------------------------------------------------------------------------
+1. providers: 
+array of properties to be available within the module via dependency injection
+
+2. controllers: 
+array of controllers
+
+3. exports: 
+array of providers to export to other modules
+
+4. imports: 
+List of modules required by this module. All exported providers of imported modules will be available to this module.
+

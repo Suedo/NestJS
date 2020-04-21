@@ -12,3 +12,16 @@ array of providers to export to other modules
 4. imports: 
 List of modules required by this module. All exported providers of imported modules will be available to this module.
 
+
+> All Services are providers, But All providers ARE NOT Services
+> Services are singletons wrapped in an @Injectable, an 'provided' to a module (providers array). They are single source of truth, and contain business logic
+
+
+
+
+CLI
+--------------------------------------------------------------------------------------------------------------------------------------------
+1.
+  nest g controller tasks --no-spec
+  ^ generates a `tasks.controller.ts` file in the tasks module. 
+  We provided a path, which had a module. thus, the cli added the controller as part of the module (tasks)

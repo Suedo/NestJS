@@ -16,6 +16,22 @@ List of modules required by this module. All exported providers of imported modu
 > All Services are providers, But All providers ARE NOT Services
 > Services are singletons wrapped in an @Injectable, an 'provided' to a module (providers array). They are single source of truth, and contain business logic
 
+Pipes
+--------------------------------------------------------------------------------------------------------------------------------------------
+1. Pipes are services with @Injectable decorator
+2. They implement the generic `PipeTransform` interface, and thus, all pipes must have a `transform` method, which takes in two params:
+  a. value: value of the processed argument
+  b. metadata (optional) : object containing 
+3. Whatever is returned from the `transform` method is sent to the route handler. exceptions are sent to the client
+
+--> Various types of Pipes <--
+
+1. Handler-level : defined at the handler/controller level, via the @UsePipes(<pipename>) decorator. Such pipes will process all params for the request
+2. Param-level : defined per controller param, and validates that particular param only
+3. Global-Pipes : defined at the application level, and used for all incoming requests
+
+
+
 
 
 
@@ -25,3 +41,25 @@ CLI
   nest g controller tasks --no-spec
   ^ generates a `tasks.controller.ts` file in the tasks module. 
   We provided a path, which had a module. thus, the cli added the controller as part of the module (tasks)
+
+
+Launch.Json For Vscode Debug
+--------------------------------------------------------------------------------------------------------------------------------------------
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Nest Framework",
+      "args": ["${workspaceFolder}/src/main.ts"],
+      "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+      "sourceMaps": true,
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector"
+    }
+  ]
+}

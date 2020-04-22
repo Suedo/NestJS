@@ -24,6 +24,9 @@ Pipes
   b. metadata (optional) : object containing 
 3. Whatever is returned from the `transform` method is sent to the route handler. exceptions are sent to the client
 
+NestJS ships with two built-in pipes: 
+ValidationPipe and ParseIntPipe
+
 --> Various types of Pipes <--
 
 1. Handler-level : defined at the handler/controller level, via the @UsePipes(<pipename>) decorator. Such pipes will process all params for the request

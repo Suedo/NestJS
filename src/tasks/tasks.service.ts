@@ -13,19 +13,19 @@ export class TasksService {
   }
 
   getFilteredTasks(filter: FilterTaskDto): Task[] {
-    const { status, search } = filter;
+    console.log('in getFilteredTasks');
+    const { status = '', search = '' } = filter;
+    console.log(`${status}, ${search}`);
 
-    let filteredTasks = this.tasks;
+    const filteredTasks = this._tasks.filter(
+      task => task.title.includes(search) || task.description.includes(search),
+    );
 
-    if (status) {
-      filteredTasks = filteredTasks.filter(task => task.status === status);
+    if (status.length > 0) {
+      return filteredTasks.filter((task: Task) => task.status === status);
     }
 
-    if (search) {
-      filteredTasks = filteredTasks.filter(task => {
-        task.title.includes(search) || task.description.includes(search);
-      });
-    }
+    console.log(filteredTasks);
 
     return filteredTasks;
   }

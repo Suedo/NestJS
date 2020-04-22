@@ -6,10 +6,10 @@ import { FilterTaskDto } from './dto/filter-task-dto';
 
 @Injectable()
 export class TasksService {
-  private tasks: Task[] = [];
+  private _tasks: Task[] = [];
 
-  getAllTasks() {
-    return this.tasks;
+  get tasks(): Task[] {
+    return this._tasks;
   }
 
   getFilteredTasks(filter: FilterTaskDto): Task[] {
@@ -61,9 +61,3 @@ export class TasksService {
     return task;
   }
 }
-
-// https://github.com/nestjs/nest/issues/4655
-// private _tasks: string[] = [];
-// get tasks(): string[] {
-//   return this.tasks;
-// }

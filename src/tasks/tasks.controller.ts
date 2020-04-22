@@ -23,7 +23,7 @@ export class TasksController {
       console.log(`getTasks:: ${JSON.stringify(filterDto)}`);
       return this.taskService.getFilteredTasks(filterDto);
     } else {
-      return this.taskService.getAllTasks();
+      return this.taskService.tasks;
     }
   }
 

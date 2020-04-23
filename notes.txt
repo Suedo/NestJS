@@ -66,3 +66,14 @@ Launch.Json For Vscode Debug
     }
   ]
 }
+
+
+Adding TypeOrm
+--------------------------------------------------------------------------------------------------------------------------------------------
+1. yarn add @nestjs/typeorm typeorm pg
+2. Add a typeorm.config.ts file in a 'config' folder, where we specify db name, port, host etc
+3. Add `TypeOrmModule.forRoot(typeOrmConfig)` in the imports section of app module
+4. Create an Entity for your model. We create a 'task.entity.ts' in the tasks module's folder root location.
+5. Create a Repository for your Task Entity. Repository is the persistence layer.
+5. Add newly created Repository to forfeature part of TypeOrmModule, to make it avaible via DI thoughout the module
+6. Inject Repository in constructor of service

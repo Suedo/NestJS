@@ -12,11 +12,11 @@ import {
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task-dto';
-import { TaskStatus, Task } from './task.model';
+import { TaskStatus, TaskI } from './task.model';
 import { FilterTaskDto } from './dto/filter-task-dto';
 import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
 
-@Controller('tasks')
+@Controller('api/v1/tasks')
 export class TasksController {
   constructor(private taskService: TasksService) {}
 
@@ -43,7 +43,7 @@ export class TasksController {
   }
 
   @Delete('delete/:id')
-  deleteTask(@Param('id') id: string): Task[] {
+  deleteTask(@Param('id') id: string): TaskI[] {
     return this.taskService.deleteTask(id);
   }
 
@@ -63,7 +63,7 @@ export class TasksController {
   updateStatus(
     @Param('id') id: string,
     @Body('status', TaskStatusValidationPipe) newStatus: TaskStatus,
-  ): Task {
+  ): TaskI {
     return this.taskService.updateTaskStatus(id, newStatus);
   }
 }

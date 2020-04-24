@@ -77,3 +77,14 @@ Adding TypeOrm
 5. Create a Repository for your Task Entity. Repository is the persistence layer.
 5. Add newly created Repository to forfeature part of TypeOrmModule, to make it avaible via DI thoughout the module
 6. Inject Repository in constructor of service
+
+
+
+Duplicate User Signup
+--------------------------------------------------------------------------------------------------------------------------------------------
+A generic case : Trying to add a resource to DB that already exists. In our case, signing up, user gives a name that is already taken.
+we would want the user to be told the same. Since we are storing username and password in DB, we can create a unique constraint on username:
+
+1. in Entity, add: @Unique(['username']) >> this sets up a unique constraint in DB
+2. when attempting to save it, DB will error out, we will catch it, and throw exception etc
+

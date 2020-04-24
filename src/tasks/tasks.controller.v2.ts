@@ -11,16 +11,12 @@ import {
   Patch,
   Query,
 } from '@nestjs/common';
-// import { CreateTaskDto } from './dto/create-task-dto';
-// import { TaskStatus } from './task.model';
-// import { FilterTaskDto } from './dto/filter-task-dto';
-// import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
-import { TaskPersistenceService } from './tasks.persistent.service';
-import { Task } from './task.entity';
 import { CreateTaskDto } from './dto/create-task-dto';
-import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
 import { TaskStatus } from './task.model';
 import { FilterTaskDto } from './dto/filter-task-dto';
+import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
+import { TaskPersistenceService } from './tasks.persistent.service';
+import { Task } from './task.entity';
 
 @Controller('api/v2/tasks')
 export class TasksControllerV2 {

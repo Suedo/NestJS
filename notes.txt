@@ -88,3 +88,7 @@ we would want the user to be told the same. Since we are storing username and pa
 1. in Entity, add: @Unique(['username']) >> this sets up a unique constraint in DB
 2. when attempting to save it, DB will error out, we will catch it, and throw exception etc
 
+
+JWT Signin
+--------------------------------------------------------------------------------------------------------------------------------------------
+1. create a jwt token on validated sigin, and return token to user

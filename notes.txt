@@ -92,3 +92,66 @@ we would want the user to be told the same. Since we are storing username and pa
 JWT Signin
 --------------------------------------------------------------------------------------------------------------------------------------------
 1. create a jwt token on validated sigin, and return token to user
+2. use token in header, to access protected route
+
+We need these four packages for passport's auth to work, grouped in a way that helps me remember:
+passport + @nestjs/passport       // (wrapper over passport)
+passport-jwt + @nestjs/jwt        // (wrapper over passport-jwt strategy, i think)
+
+The `validate` mathod of JwtStrategy gets called before accessing all @UseGuard(JwtGuard) routes
+
+
+Three Places where we mainly need to make changes for jwt:
+1. Auth Module: src/auth/auth.module.ts:
+  a) add this to the imports:
+
+    JwtModule.register({
+      secret: 'mysecret',
+      signOptions: {
+        expiresIn: '600s',
+      },
+    }),
+    PassportModule.register({
+      defaultStrategy: 'jwt',
+    }),
+  
+2. Jwt Strategy: src/auth/jwt.strategy.ts:
+
+  Passport needs a strategy provided to it. It has various strategies that it accepts. pasport-jwt is the jwt strategy.
+  > @nestjs/passport is nest's wrapper over the passport module. It has a PassportStrategy funtionality that takes in a strategy
+  > All passport strategies exports a strategy class. Thus, passport-jwt exports a jwt based `strategy` class, which is fed to Nest's PassportStrategy
+  > All passport strategies also export a ExtractJwt class, which dictates where in the request to get the auth token from.
+
+  Our JwtStrategy class needs to call the parent class (PassportStrategy) with :
+  {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // extraction protocol
+      secretOrKey: 'mysecret', // secret
+  }
+
+  It also must have a `validate(jwtpayload)` method, which will determine if the token is valid or not
+
+3. AuthService: src/auth/auth.service.ts:
+
+  This will have sign-in , login etc type routes, which basically turn the unauth flow to authenticated flow.
+  It's methods will take the request payload, and create an accesstoken from it, by signing it with our secret.
+
+  This sign is where `@nestjs/jwt` JwtService comes it. it encapsulates the `sign`-ing funtionality, where we only pass it the payload to sign,
+  and it takes care of everything else, based on the configurations we have done earlier... secret etc. 
+
+  Below is the allow Login functionality:
+
+    ```
+    async allowLogin(dto: AuthCredentialsDto): Promise<{ accessToken: string }> {
+      const username = await this.repository.validatePassword(dto);
+
+      if (!username) {
+        throw new UnauthorizedException('Incorrect credentials');
+      }
+
+      const payload: JwtPayload = { username };
+      const accessToken = await this.jwtService.sign(payload); // already has the secret and stuff
+
+      return { accessToken };
+    }
+    ```
+

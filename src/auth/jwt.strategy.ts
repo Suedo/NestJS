@@ -22,7 +22,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     // whatever we return from this method is going to be injected into the request for the protected route
 
     const { username } = payload;
-    const user = await this.userRepo.findOne(username);
+    const query = { username: username };
+    console.log('in validate: ' + JSON.stringify(query));
+
+    const user = await this.userRepo.findOne(query);
 
     if (!user) {
       throw new UnauthorizedException('User Not Found');

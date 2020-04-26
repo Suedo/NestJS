@@ -34,15 +34,22 @@ export class TaskPersistenceService {
     return this.repository.createTask(createTaskDto, user);
   }
 
-  async deleteTask(id: number): Promise<void> {
-    const deletedTask = await this.repository.delete(id);
-    console.log(`Deleted Task: ${JSON.stringify(deletedTask)}`);
+  async deleteTask(id: number, user: User): Promise<void> {
+    const result = await this.repository.delete({
+      id, // and
+      userId: user.id,
+    });
+    console.log(`Deleted Task: ${JSON.stringify(result)}`);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Did not find a task with id: ${id}`);
+    }
   }
 
-  // async updateStatus(id: number, status: TaskStatus): Promise<Task> {
-  //   const task = await this.getTaskById(id);
-  //   task.status = status;
-  //   await task.save();
-  //   return task;
-  // }
+  async updateStatus(id: number, status: TaskStatus, user): Promise<Task> {
+    const task = await this.getTaskById(id, user);
+    task.status = status;
+    await task.save();
+    return task;
+  }
 }

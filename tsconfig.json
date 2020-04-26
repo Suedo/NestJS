@@ -9,7 +9,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true
+    "incremental": false // true needs `dist` cleaning for new routes to show up, and many other issues, like modules not being found. https://stackoverflow.com/questions/61306329/nestjs-error-cannot-find-module-app-controller
   },
   "exclude": ["node_modules", "dist"]
 }

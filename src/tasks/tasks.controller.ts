@@ -9,14 +9,17 @@ import {
   Query,
   UsePipes,
   ValidationPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task-dto';
 import { TaskStatus, TaskI } from './task.model';
 import { FilterTaskDto } from './dto/filter-task-dto';
 import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('api/v1/tasks')
+@UseGuards(JwtAuthGuard)
 export class TasksController {
   constructor(private taskService: TasksService) {}
 

@@ -13,6 +13,8 @@ import { ValidatePromise } from 'class-validator';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { GetUser } from './get-user.decorator';
+import { User } from './user.entity';
 
 @Controller('/api/v2/auth')
 export class AuthController {
@@ -33,7 +35,7 @@ export class AuthController {
 
   @Get('test')
   @UseGuards(JwtAuthGuard)
-  test(@Request() req) {
-    return 'success';
+  test(@GetUser() user: User) {
+    console.log(user);
   }
 }

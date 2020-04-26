@@ -1,0 +1,11 @@
+# shared config for all environments
+server:
+  port: 3200
+
+db:
+  type: 'postgres'
+  port: 5432
+  database: 'taskmanagement'
+
+jwt:
+  expiresIn: '600s'
